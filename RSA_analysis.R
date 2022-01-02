@@ -146,6 +146,19 @@ trust_nations_vector_bet <- sim_trust_nations_bet[lower.tri(sim_trust_nations_be
 
 
 # =================================================
+# National sim matrix of tightness-looseness
+my_data <- read.sav("tight.sav", as.data.frame = T)
+sim_tight <- (max(abs(dist(my_data[,-1]))) - abs(dist(my_data[,-1])))/max(abs(dist(my_data[,-1])))
+
+# Significance test of the correlation with Mantel test
+library(cultevo)
+mantel.test(sim_tight, sim_trust_nations_all, plot = T)
+mantel.test(sim_tight, sim_trust_nations_inter, plot = T)
+mantel.test(sim_tight, sim_trust_nations_inst, plot = T)
+mantel.test(sim_tight, sim_trust_nations_bet, plot = T)
+
+
+# =================================================
 # Calculation of RSIN
 # Individual level matrix
 my_data <- as.data.frame(read.table('sim_data.txt'))
@@ -230,4 +243,3 @@ model <- lme(LS ~ RSIN_all * tight,
 summary(model)
 ICC(model)
 simple_slopes(model)
-
